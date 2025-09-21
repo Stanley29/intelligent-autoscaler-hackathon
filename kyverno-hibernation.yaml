@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: hibernate-unused-previews
+spec:
+  rules:
+    - name: scale-down-unused
+      match:
+        resources:
+          kinds:
+            - Deployment
+          namespaces:
+            - previews
+      preconditions:
+        all:
+          - key: "{{request.object.metadata.annotations.preview-active}}"
+            operator: Equals
+            value: "false"
+      mutate:
+        patchStrategicMerge:
+          spec:
+            replicas: 0
