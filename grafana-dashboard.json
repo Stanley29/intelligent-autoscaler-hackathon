@@ -1,0 +1,51 @@
+{
+  "id": null,
+  "uid": "autoscaler-hackathon",
+  "title": "Intelligent Autoscaler Hackathon",
+  "tags": ["autoscaler", "k3s", "hackathon"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage per Pod",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\",pod!=\"\"}[1m])) by (pod)",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage per Node",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum(container_memory_usage_bytes{container!=\"\"}) by (node)",
+          "legendFormat": "{{node}}",
+          "refId": "B"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "HPA Replica Count",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "kube_horizontalpodautoscaler_status_current_replicas",
+          "legendFormat": "{{horizontalpodautoscaler}}",
+          "refId": "C"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 }
+    }
+  ]
+}
