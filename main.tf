@@ -84,10 +84,10 @@ resource "aws_security_group" "devops_sg" {
 
 # EC2 Instance
 resource "aws_instance" "devops_ec2" {
-  ami           = "ami-0a716d3f3b16d290c" # Ubuntu 24.04 LTS in eu-north-1
-  instance_type = "t3.micro"
-  key_name      = var.key_name
-  subnet_id     = aws_subnet.devops_subnet.id
+  ami                    = "ami-0a716d3f3b16d290c" # Ubuntu 24.04 LTS in eu-north-1
+  instance_type          = "t3.micro"
+  key_name               = var.key_name
+  subnet_id              = aws_subnet.devops_subnet.id
   vpc_security_group_ids = [aws_security_group.devops_sg.id]
 
   user_data = <<-EOF
