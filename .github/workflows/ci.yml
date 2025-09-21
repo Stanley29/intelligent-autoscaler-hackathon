@@ -22,7 +22,6 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Kubeval (Kubernetes YAML validation)
-        uses: instrumenta/kubeval-action@v1
-        with:
-          files: "*.yaml"
+      - name: Validate Kubernetes YAML with kubeval
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/work instrumenta/kubeval *.yaml
